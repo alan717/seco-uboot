@@ -33,7 +33,7 @@ CLEAN="CLEAN"
 EXTRA_UART=""
 DEBUG_UART5=""
 RTC_LOW_POWER=""
-COMPILER_PATH="/opt/arm-fsl-linux-gnueabi/bin/arm-fsl-linux-gnueabi-"
+COMPILER_PATH="/opt/freescale/usr/local/gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12/fsl-linaro-toolchain/bin/arm-fsl-linux-gnueabi-"
 UBOOT_VER="2013"
 
 SUFFIX=""
@@ -556,7 +556,15 @@ function compile () {
 	echo ${SUFFIX} > ./tools/suffix
 	sleep 2
 	
-        make -j8 DDR_SIZE=${MEM_SIZE} DDR_TYPE=1 BOARD_TYPE=${BOARD} CPU_TYPE=${CPU_TYPE} ENV_DEVICE=ENV_${ENV_DEV} OPT_UART=${EXTRA_UART} OPT_SERIAL_DEBUG=${DEBUG_UART5} OPT_RTC=${RTC_LOW_POWER} OPT_RTC_EXT=${RTC_EXT}
+        make -j8 DDR_SIZE=${MEM_SIZE} \
+		DDR_TYPE=1\ 
+		BOARD_TYPE=${BOARD} \
+		CPU_TYPE=${CPU_TYPE} \
+		ENV_DEVICE=ENV_${ENV_DEV} \
+		OPT_UART=${EXTRA_UART} \
+		OPT_SERIAL_DEBUG=${DEBUG_UART5} \
+		OPT_RTC=${RTC_LOW_POWER} \
+		OPT_RTC_EXT=${RTC_EXT}
 	cp u-boot.imx u-boot$(cat ./tools/suffix | awk '{print $1}')$(./tools/setlocalversion ./).imx
 }
 
